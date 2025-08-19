@@ -1,2 +1,2 @@
-# rowing-training-app
-An app to track and manage workout load for rowing.
+# training-load-calculator
+A component to collect heart rate data and calculate training load via critical power.
