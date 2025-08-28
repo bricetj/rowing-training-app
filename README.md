@@ -1,2 +1,3 @@
-# training-load-calculator
-A component to collect heart rate data and calculate training load via critical power.
+# rowing-training-app
+
+An app to track rowing workouts and manage training load.

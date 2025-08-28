@@ -1,0 +1,272 @@
+/**
+ * Brice Jenkins
+ */
+
+#root {
+    width: 800px;
+    height: fit-content;
+    background-color: rgb(230, 230, 230);
+    box-shadow: 2px 2px 2px rgb(61, 61, 61);
+    margin: 0px auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+body {
+    display: flex;
+    min-height: 100%;
+    margin: 10px;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color-scheme: light dark;
+    color: rgb(30, 30, 30);
+    background-color: light-dark(rgb(195, 195, 195), rgb(80, 80, 80));
+}
+
+header {
+    padding: 5px;
+    color: rgb(68, 199, 255);
+    box-shadow: 1px 1px 1px rgb(85, 85, 85);
+    background-color: light-dark(rgb(85, 85, 85), rgb(45, 45, 45));
+}
+
+header h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 40px;
+    text-shadow: 0 3px 0 rgb(35, 35, 35);
+}
+
+header p {
+    padding: 10px;
+    font-style: italic;
+    font-weight: 550;
+    color: rgb(217, 217, 217);
+}
+
+.App-nav {
+    padding: 20px;
+    box-shadow: 1px 1px 1px rgb(52, 52, 52);
+    border: 1px solid rgb(45, 45, 45);
+    color: rgb(230, 230, 230);
+    background-color: light-dark(rgb(52, 52, 52), rgb(70, 70, 70));
+    text-align: left;
+}
+
+nav a {
+    margin: 10px;
+    padding: 12px;
+    color: rgb(230, 230, 230);
+    font-weight: 600;
+    text-decoration: none;
+    background-color: light-dark(rgb(52, 52, 52), rgb(70, 70, 70));
+}
+
+nav a:visited {
+    margin: 10px;
+    padding: 12px;
+    color: rgb(230, 230, 230);
+    background-color: light-dark(rgb(52, 52, 52), rgb(70, 70, 70));
+}
+
+nav a:hover {
+    margin: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 1px inset;
+    color: orange;
+    background-color: light-dark(rgb(70, 70, 70), rgb(45, 45, 45));
+}
+
+footer {
+    margin: 30px 0 0 0;
+    color: rgb(230, 230, 230);
+    padding: 15px;
+    box-shadow: 1px 1px 1px rgb(85, 85, 85);
+    background-color: light-dark(rgb(85, 85, 85), rgb(45, 45, 45));
+    text-align: center;
+}
+
+h2 {
+    margin: 10px;
+    padding: 20px;
+}
+
+p {
+    margin: 10px;
+    padding: 20px;
+}
+
+table {
+    width: 750px;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+thead {
+    padding: 10px;
+    border: 1px solid rgb(30, 30, 30);
+    border-collapse: collapse;
+    background-color: light-dark(rgb(200, 200, 200), rgb(61, 61, 61));
+}
+
+tr th {
+    padding: 5px;
+    color: light-dark(rgb(30, 30, 30), rgb(230, 230, 230));
+    border: 0px;
+    border-collapse: collapse;
+}
+
+tr td {
+    padding: 10px;
+    color: rgb(30, 30, 30);
+    border: solid 1pt rgb(30, 30, 30);
+    border-collapse: collapse;
+    max-width: 250px;
+}
+
+button {
+    margin: 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: light-dark(rgb(30, 30, 30), rgb(230, 230, 230));
+    background-color: light-dark(rgb(200, 200, 200), rgb(70, 70, 70));
+    box-shadow: 1px 1px 1px black;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+
+button:hover {
+    border-color: rgb(10, 10, 10);
+    color: light-dark(rgb(94, 94, 94), orange);
+}
+
+button:focus,
+button:focus-visible {
+    outline: 5px auto -webkit-focus-ring-color;
+}
+
+.exercise-form {
+    place-items: center;
+    text-align: left;
+}
+
+.exercise-form fieldset {
+    border: solid 1pt rgb(70, 70, 70);
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px rgb(70, 70, 70);
+}
+
+.exercise-form label {
+    font-weight: 600;
+}
+
+.exercise-form input {
+    margin: 10px;
+    width: 200px;
+    position: relative;
+    left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    border: solid 1px rgb(70, 70, 70);
+    background-color: rgb(255, 255, 255);
+}
+
+.exercise-form select {
+    margin: 10px;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    border: solid 1px rgb(70, 70, 70);
+}
+
+.add-button {
+    margin: 10px;
+    text-align: center;
+}
+
+.update-button {
+    margin: 10px;
+    text-align: center;
+}
+
+.App-icons:hover {
+    cursor: pointer;
+}
+
+.edit-icon {
+    margin-right: 15px;
+}
+
+.edit-icon :hover{
+    color: orange;
+}
+
+.delete-icon {
+    margin-left: 15px;
+}
+
+.delete-icon :hover{
+    color: orange;
+}
+
+.tooltip-div {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    position: absolute;
+    top: calc(-100% - 20px);
+    transform: translateX(-25%);
+    background-color: rgb(230, 230, 230);
+    padding: 5px 10px;
+    border: solid 1px black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px rgb(70, 70, 70);
+}
+
+.connect-column {
+    float: left;
+    width: 50%;
+}
+
+.connect-row:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.connect-btn-and-reading {
+    margin: 10px;
+    padding: 10px;
+    height: 200px;
+}
+.reading-text {
+    margin: 20px;
+    height: 100px;
+    line-height: 100px;
+}
+
+.erg-img {
+    margin: 20px;
+    height: 100px;
+}
+
+.workout-page {
+    margin: 20px;
+}
+
+.workout-element {
+    height: 100px;
+    margin: 5px;
+    padding: 20px;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 1px 1px 1px 1px rgb(168, 168, 168)
+}
+
+.workout-element label {
+    font-weight: bold;
+}
