@@ -3,18 +3,19 @@ import HeartRate from "../components/HeartRate";
 import StrokeRate from "../components/StrokeRate";
 import Pace from "../components/Pace";
 import Watts from "../components/Watts";
+import ElapsedTime from "../components/ElapsedTime";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getHeartRateChar, startMonitoring } from '../heartRateBTSlice';
 
-function WorkoutPage (hrChar) {
+
+function WorkoutPage ( {hrChar, genStatusChar} ) {
 
     return (
         <div className='workout-page'>
             <div className='connect-row'>
                 <div className='connect-column'>
                     <div className='workout-element'>
-                        <label>Distance<Distance></Distance></label>
+                        <label>Distance<Distance genStatusChar={genStatusChar}></Distance></label>
                     </div>
                     <div className='workout-element'>
                         <label>Pace<Pace></Pace></label>
@@ -28,7 +29,10 @@ function WorkoutPage (hrChar) {
                         <label>Stroke Rate<StrokeRate></StrokeRate></label>
                     </div>
                     <div className='workout-element'>
-                        <label>Heart Rate<HeartRate heartRateChar={hrChar.hrChar}></HeartRate></label>
+                        <label>Time<ElapsedTime genStatusChar={genStatusChar}></ElapsedTime></label>
+                    </div>
+                    <div className='workout-element'>
+                        <label>Heart Rate<HeartRate heartRateChar={hrChar}></HeartRate></label>
                     </div>
                 </div>
             </div>

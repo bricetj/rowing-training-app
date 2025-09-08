@@ -250,6 +250,19 @@ button:focus-visible {
     line-height: 100px;
 }
 
+.data-reading {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.data-reading h1 {
+    grid-column: 2;
+}
+
+.data-reading p {
+    grid-column: 3;
+}
+
 .erg-img {
     margin: 20px;
     height: 100px;

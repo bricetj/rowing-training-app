@@ -5,11 +5,11 @@
 import { useState } from 'react';
 import HeartRate from './HeartRate';
 import { useDispatch } from 'react-redux';
-import { requestDevice, getDeviceName, getHeartRateChar, startMonitoring } from '../heartRateBTSlice';
+import { requestDevice, getDeviceName, getHeartRateChar, startMonitoring } from '../HeartRateBTSlice';
 
 let hrChar;
 
-function ConnectBTHeartRate ({setIsStartBTNVis, setHRChar}) {
+function ConnectBTHeartRate ({ setIsStartBTNVis, setHRChar }) {
     const [connectBTNText, setConnectBTNText] = useState('Connect Heart Rate');
     const [deviceName, setDeviceName] = useState('');
 

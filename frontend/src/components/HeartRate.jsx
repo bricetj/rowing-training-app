@@ -32,9 +32,10 @@ function HeartRate ({heartRateChar}) {
 
     return (
         <div>
-            <div className='hr-container'>
-                <div className='hr-reading'>
+            <div className='data-container'>
+                <div className='data-reading'>
                     <h1>{hrText}</h1>
+                    <p>bpm</p>
                 </div>
             </div>
         </div>

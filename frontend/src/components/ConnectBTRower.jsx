@@ -4,51 +4,57 @@
 
 import { useState } from 'react';
 import ErgImg from '../assets/images/concept2_rowerg.webp';
+import { useDispatch } from 'react-redux';
+import { requestDevice, getDeviceName, getGenStatusChar, startMonitoring } from '../RowingMachineBTSlice';
+import Distance from './Distance';
 
+let genStatusChar;
 
-function ConnectBTRower() {
+function ConnectBTRower({ setIsStartBTNVis, setGenStatusChar }) {
     const [connectBTNText, setConnectBTNText] = useState('Connect Rower');
     const [isConnected, setIsConnected] = useState(false);
     const [deviceName, setDeviceName] = useState('');
 
-    let rowDevice;
-    let service;
+    const dispatch = useDispatch();
 
-    const requestDevice = async() => {
-        rowDevice = await navigator.bluetooth.requestDevice({
-            filters: [{
-                services: ['ce060000-43e5-11e4-916c-0800200c9a66'] // Discovery Service
-            }],
-            optionalServices: [
-                'ce060010-43e5-11e4-916c-0800200c9a66', // Information Service
-                'ce060020-43e5-11e4-916c-0800200c9a66', // Control Service
-                'ce060030-43e5-11e4-916c-0800200c9a66'  // Rowing Service
-            ]
-        });
+    let name;
 
-        rowDevice.addEventListener('gattserverdisconnected', connectDevice);
-    };
-
-    const connectDevice = async() => {
-        if(rowDevice.gatt.connected) return;
-        
-        const server = await rowDevice.gatt.connect();
-        service = await server.getPrimaryService('ce060030-43e5-11e4-916c-0800200c9a66'); // Rowing
-    };
-
-    const connectToBTDevice = async() => {
-        await requestDevice();
-        setConnectBTNText('Connecting...');
-        await connectDevice();
-        setConnectBTNText('Rower Connected');
-        setDeviceName(`${rowDevice.name}`)
-        console.log(service.getCharacteristics());
-        setIsConnected(true);
-    };
-
-    // const startMonitoring = async() => {
-    //     await heartRateChar.startNotifications();
-    // };
+    const connectToBTDevice = () => {
+            dispatch(requestDevice())
+                .then(() => {
+                    name = dispatch(getDeviceName());
+                })
+                .then(() => {
+                    name.then(function(result) {
+                        if (result.payload !== undefined) {
+                            setConnectBTNText('Rowing Machine Connected');
+                            setIsConnected(true);
+                            setIsStartBTNVis(true);
+                        };
+                        setDeviceName(result.payload);
+                    })
+                })
+                .then(() => {
+                    genStatusChar = dispatch(getGenStatusChar())
+                    genStatusChar.then(function(result) {
+                        genStatusChar = result.payload;
+                        setGenStatusChar(genStatusChar);
+                        console.log(genStatusChar);
+                        // genStatusChar.addEventListener('characteristicvaluechanged', e => {
+                        //     const value = e.target.value;
+                        //     const low = value.getUint8(3);
+                        //     const mid = value.getUint8(4);
+                        //     const high = value.getUint8(5);
+                        //     const totalDist = (low + (mid * 256) + (high * 65536)) / 10;
+                        //     console.log(totalDist);
+                        // })
+                    })
+                })
+                // .then(() => {
+                //     dispatch(startMonitoring());
+                //     console.log('monitoring distance')
+                // })
+        }
 
     return (
         <div className='connect-column'>
@@ -63,7 +69,6 @@ function ConnectBTRower() {
             {isConnected &&
             <div className='connect-btn-and-reading'>
                 <img className='erg-img' src={ErgImg} alt="Concept 2 Row Erg"/>
-                <br/>
                 <button onClick={connectToBTDevice}>Rower Connected</button>
             </div> 
             }
