@@ -1,19 +1,23 @@
 /**
  * Brice Jenkins
+ * Copyright 2025
  */
 
 import { useState } from 'react';
 import ErgImg from '../assets/images/concept2_rowerg.webp';
 import { useDispatch } from 'react-redux';
-import { requestDevice, getDeviceName, getGenStatusChar, startMonitoring } from '../RowingMachineBTSlice';
-import Distance from './Distance';
+import { requestDevice, getDeviceName, getGenStatusChar, getAddStatus1Char, getAddStrokeDataChar } from '../RowingMachineBTSlice';
 
-let genStatusChar;
-
-function ConnectBTRower({ setIsStartBTNVis, setGenStatusChar }) {
+function ConnectBTRower({ setIsStartBTNVis, setRowChars }) {
     const [connectBTNText, setConnectBTNText] = useState('Connect Rower');
     const [isConnected, setIsConnected] = useState(false);
     const [deviceName, setDeviceName] = useState('');
+
+    // Variables defined to hold various rowing service characteristics.
+    let genStatusChar;
+    let addStatus1Char;
+    let addStrokeDataChar;
+    const rowCharsObj = {};
 
     const dispatch = useDispatch();
 
@@ -35,25 +39,36 @@ function ConnectBTRower({ setIsStartBTNVis, setGenStatusChar }) {
                     })
                 })
                 .then(() => {
-                    genStatusChar = dispatch(getGenStatusChar())
+                    // Retrieves and stores General Status characteristic.
+                    genStatusChar = dispatch(getGenStatusChar());
                     genStatusChar.then(function(result) {
                         genStatusChar = result.payload;
-                        setGenStatusChar(genStatusChar);
+                        rowCharsObj.genStatusChar = genStatusChar;
                         console.log(genStatusChar);
-                        // genStatusChar.addEventListener('characteristicvaluechanged', e => {
-                        //     const value = e.target.value;
-                        //     const low = value.getUint8(3);
-                        //     const mid = value.getUint8(4);
-                        //     const high = value.getUint8(5);
-                        //     const totalDist = (low + (mid * 256) + (high * 65536)) / 10;
-                        //     console.log(totalDist);
-                        // })
                     })
                 })
-                // .then(() => {
-                //     dispatch(startMonitoring());
-                //     console.log('monitoring distance')
-                // })
+                .then(() => {
+                    // Retrieves and stores Additional Status 1 characteristic.
+                    addStatus1Char = dispatch(getAddStatus1Char());
+                    addStatus1Char.then(function(result) {
+                        addStatus1Char = result.payload;
+                        rowCharsObj.addStatus1Char = addStatus1Char;
+                        console.log(addStatus1Char);
+                    })
+                })
+                .then(() => {
+                    // Retrieves and stores Additional Stroke Data characteristic.
+                    addStrokeDataChar = dispatch(getAddStrokeDataChar());
+                    addStrokeDataChar.then(function(result) {
+                        addStrokeDataChar = result.payload;
+                        rowCharsObj.addStrokeDataChar = addStrokeDataChar;
+                        console.log(addStrokeDataChar);
+                    })
+                })
+                .then(() => {
+                    // Updates object state variable so characteristics can be passed to components.
+                    setRowChars(rowCharsObj);
+                })
         }
 
     return (

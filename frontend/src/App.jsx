@@ -1,5 +1,6 @@
 /**
  * Brice Jenkins
+ * Copyright 2025
  */
 
 import './App.css';
@@ -11,7 +12,9 @@ import { useState } from 'react';
 
 function App() {
     const [hrChar, setHRChar] = useState();
-    const [genStatusChar, setGenStatusChar] = useState();
+    const [rowChars, setRowChars] = useState();
+    // const [genStatusChar, setGenStatusChar] = useState();
+    // const [addStatus1Char, setAddStatus1Char] = useState();
 
     return (
         <div className='app'>
@@ -21,8 +24,24 @@ function App() {
             <Router>
                 <Routes>
                     <Route path='/' element={<HomePage/>}></Route>
-                    <Route path='/connect-devices' element={<ConnectDevices setHRChar={setHRChar} setGenStatusChar={setGenStatusChar}/>}></Route>
-                    <Route path='/workout' element={<WorkoutPage hrChar={hrChar} genStatusChar={genStatusChar}/>}></Route>
+                    <Route path='/connect-devices'
+                        element={<ConnectDevices
+                                    setHRChar={setHRChar}
+                                    setRowChars={setRowChars}
+                                    // setGenStatusChar={setGenStatusChar}
+                                    // setAddStatus1Char={setAddStatus1Char}
+                                    />
+                                }>
+                    </Route>
+                    <Route path='/workout'
+                        element={<WorkoutPage 
+                                    hrChar={hrChar}
+                                    rowChars={rowChars}
+                                    // genStatusChar={genStatusChar}
+                                    // addStatus1Char={addStatus1Char}
+                                    />
+                                }>
+                    </Route>
                 </Routes>
             </Router>
         </div>

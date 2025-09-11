@@ -1,5 +1,6 @@
 /**
  * Brice Jenkins
+ * Copyright 2025
  */
 
 import { Link } from 'react-router-dom';

@@ -1,5 +1,6 @@
-/*
+/**
  * Brice Jenkins
+ * Copyright 2025
  */
 
 
@@ -22,11 +23,17 @@ export const requestDevice = createAsyncThunk(
         const server = await device.gatt.connect();
         const service = await server.getPrimaryService('ce060030-43e5-11e4-916c-0800200c9a66'); // Rowing
         const genStatusChar = await service.getCharacteristic('ce060031-43e5-11e4-916c-0800200c9a66'); //General Status Characteristic
+        const addStatus1Char = await service.getCharacteristic('ce060032-43e5-11e4-916c-0800200c9a66'); //Additional Status 1 Characteristic
+        const addStrokeDataChar = await service.getCharacteristic('ce060036-43e5-11e4-916c-0800200c9a66'); //Additional Stroke Data Characteristic
 
         return {
             device: device,
             service: service,
-            genStatusChar: genStatusChar
+            characteristics: {
+                genStatusChar: genStatusChar,
+                addStatus1Char: addStatus1Char,
+                addStrokeDataChar: addStrokeDataChar
+            }
         };
     }
 );
@@ -49,11 +56,35 @@ export const getGenStatusChar = createAsyncThunk(
     'rowingMachineBT/getGenStatusChar',
     async (payload, thunkAPI) => {
         const state = thunkAPI.getState();
-        const genStatusChar = state.rowingMachineBT.genStatusChar;
+        const genStatusChar = state.rowingMachineBT.characteristics.genStatusChar;
         if (!genStatusChar) {
-            throw new Error('No interval characteristic.')
+            throw new Error('No general status characteristic.')
         }
         return genStatusChar;
+    }
+);
+
+export const getAddStatus1Char = createAsyncThunk(
+    'rowingMachineBT/getAddStatus1Char',
+    async (payload, thunkAPI) => {
+        const state = thunkAPI.getState();
+        const addStatus1Char = state.rowingMachineBT.characteristics.addStatus1Char;
+        if (!addStatus1Char) {
+            throw new Error('No additional status 1 characteristic.')
+        }
+        return addStatus1Char;
+    }
+);
+
+export const getAddStrokeDataChar = createAsyncThunk(
+    'rowingMachineBT/getAddStrokeDataChar',
+    async (payload, thunkAPI) => {
+        const state = thunkAPI.getState();
+        const addStrokeDataChar = state.rowingMachineBT.characteristics.addStrokeDataChar;
+        if (!addStrokeDataChar) {
+            throw new Error('No additional stroke data characteristic.')
+        }
+        return addStrokeDataChar;
     }
 );
 
@@ -62,11 +93,18 @@ export const startMonitoring = createAsyncThunk(
     'rowingMachineBT/startMonitoring',
     async (payload, thunkAPI) => {
         const state = thunkAPI.getState();
-        const genStatusChar = state.rowingMachineBT.genStatusChar;
+        const genStatusChar = state.rowingMachineBT.characteristics.genStatusChar;
+        const addStatus1Char = state.rowingMachineBT.characteristics.addStatus1Char;
+        const addStrokeDataChar = state.rowingMachineBT.characteristics.addStrokeDataChar;
         if (!genStatusChar) {
             throw new Error('No general status characteristic.')
+        } else if (!addStatus1Char) {
+            throw new Error('No additional status 1 characteristic.')
         }
+
         genStatusChar.startNotifications();
+        addStatus1Char.startNotifications();
+        addStrokeDataChar.startNotifications();
     }
 );
 
@@ -98,7 +136,11 @@ const rowingMachineBTSlice = createSlice({
     name: 'rowingMachineBT',
     initialState: {
         connectedDevice: null,
-        genStatusChar: null,
+        characteristics: {
+            genStatusChar: null,
+            addStatus1Char: null,
+            addStrokeDataChar: null
+        },
         rowingState: 'inactive',
         status: 'disconnected',
         error: null
@@ -111,7 +153,9 @@ const rowingMachineBTSlice = createSlice({
         builder
             .addCase(requestDevice.fulfilled, (state, action) => {
                 state.connectedDevice = action.payload.device;
-                state.genStatusChar = action.payload.genStatusChar;
+                state.characteristics.genStatusChar = action.payload.characteristics.genStatusChar;
+                state.characteristics.addStatus1Char = action.payload.characteristics.addStatus1Char;
+                state.characteristics.addStrokeDataChar = action.payload.characteristics.addStrokeDataChar;
                 state.error = null;
                 console.log("connected:", action.payload);
                 state.status = 'device connected';

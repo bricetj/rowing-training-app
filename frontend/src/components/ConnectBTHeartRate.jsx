@@ -1,5 +1,6 @@
 /**
  * Brice Jenkins
+ * Copyright 2025
  */
 
 import { useState } from 'react';
@@ -17,7 +18,9 @@ function ConnectBTHeartRate ({ setIsStartBTNVis, setHRChar }) {
 
     let name;
 
+    // Thunks are dispatched synchronously to connect to the BT Heart Rate device.
     const connectToBTDevice = () => {
+        // Requests HR devices and connects to chosen device.
         dispatch(requestDevice())
             .then(() => {
                 name = dispatch(getDeviceName());
@@ -32,7 +35,8 @@ function ConnectBTHeartRate ({ setIsStartBTNVis, setHRChar }) {
                 })
             })
             .then(() => {
-                hrChar = dispatch(getHeartRateChar())
+                // Heart Rate characteristic is retrieved and stored.
+                hrChar = dispatch(getHeartRateChar());
                 hrChar.then(function(result) {
                     hrChar = result.payload;
                     setHRChar(hrChar);
@@ -40,6 +44,7 @@ function ConnectBTHeartRate ({ setIsStartBTNVis, setHRChar }) {
                 })
             })
             .then(() => {
+                // Starts notifications from HR device.
                 dispatch(startMonitoring());
             })
     }
@@ -49,7 +54,7 @@ function ConnectBTHeartRate ({ setIsStartBTNVis, setHRChar }) {
             <div className='connect-btn-and-reading'>
                 <div className='reading-text'>
                     <HeartRate
-                        heartRateChar = {hrChar}
+                        characteristic = {hrChar}
                     ></HeartRate>
                 </div>
                 <button onClick={connectToBTDevice}>{connectBTNText}</button>

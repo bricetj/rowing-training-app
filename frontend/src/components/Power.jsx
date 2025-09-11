@@ -7,41 +7,43 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { startMonitoring } from '../RowingMachineBTSlice';
 
-function StrokeRate ({characteristic}) {
-    const [srText, setSRText] = useState('--');
+function Power ( {characteristic} ) {
+    const [wattsText, setWattsText] = useState('--');
     const dispatch = useDispatch();
     
     useEffect(() => {
         
-        const handleSRChange = (e) => {
-            const strokeRate = parseSR(e.target.value);
-            setSRText(strokeRate);
+        const handleWattsChange = (e) => {
+            const watts = parseWatts(e.target.value);
+            setWattsText(watts);
         }; 
 
-        const parseSR = (value) => {
-            const strokeRate = value.getUint8(5);
-            return strokeRate;
+        const parseWatts = (value) => {
+            const low = value.getUint8(3);
+            const high = value.getUint8(4);
+            const totalWatts = (low + (high * 256));
+            return totalWatts;
         };
 
         if(characteristic) {
             characteristic.addEventListener(
             'characteristicvaluechanged',
-            handleSRChange)
+            handleWattsChange)
         }
 
         dispatch(startMonitoring());
-        console.log('monitoring stroke rate')
+        console.log('monitoring wattage')
 
     }, [characteristic]);
 
     return (
         <div className='data-container'>
             <div className='data-reading'>
-                <h1>{srText}</h1>
-                <p>spm</p>
+                <h1>{wattsText}</h1>
+                <p>w</p>
             </div>
         </div>
     );
 }
 
-export default StrokeRate;
+export default Power;

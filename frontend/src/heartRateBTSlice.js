@@ -1,7 +1,7 @@
-/*
+/**
  * Brice Jenkins
+ * Copyright 2025
  */
-
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
